@@ -1,0 +1,3 @@
+[submodule "CaissaCore"]
+	path = CaissaCore
+	url = https://github.com/Luci404/CaissaCore
