@@ -1,8 +1,10 @@
 #include <iostream>
-#include <bits/stdc++.h>
+#include <ctype.h>
+#include <algorithm>
+
 #include "CaissaCore/Caissa.h"
 
-Caissa::StandardBoard board;
+Caissa::StandardBoard board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
 
 std::vector<std::string> SplitString(std::string str, std::string token)
 {
@@ -51,7 +53,7 @@ void CommandLoop()
         }
         else if (commandComponents[0] == "PRINT")
         {
-            board.Print();
+            std::cout << board.ToString() << std::endl;
         }
         else if (commandComponents[0] == "MOVE")
         {
@@ -67,7 +69,7 @@ void CommandLoop()
                 std::vector<Caissa::Move> moves = board.GetLegalMoves();
                 for (uint16_t i = 0; i < moves.size(); i++)
                 {
-                    if (moves[i].OriginIndex == originIndex && moves[i].TargetIndex)
+                    if (moves[i].OriginIndex == originIndex && moves[i].TargetIndex == targetIndex)
                     {
                         board.MakeMove(moves[i]);
                         break;
@@ -127,8 +129,6 @@ void CommandLoop()
 /* Application */
 int main(int argc, char *argv[])
 {
-    board = Caissa::StandardBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
-
     std::cout << "Caissa 1.0.0" << std::endl;
 
     CommandLoop();
