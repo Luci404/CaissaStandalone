@@ -64,8 +64,20 @@ void CommandLoop()
                 uint16_t originIndex = originRank * 8 + originFile;
                 uint16_t targetIndex = targetRank * 8 + targetFile;
 
-                Caissa::Move move = Caissa::Move(originIndex, targetIndex, board.pieces[targetIndex]);
-                board.MakeMove(move);
+                std::vector<Caissa::Move> moves = board.GetLegalMoves();
+                for (uint16_t i = 0; i < moves.size(); i++)
+                {
+                    if (moves[i].OriginIndex == originIndex && moves[i].TargetIndex)
+                    {
+                        board.MakeMove(moves[i]);
+                        break;
+                    }
+
+                    if (i == moves.size() - 1)
+                    {
+                        std::cout << "Illegal move: " << commandComponents[1] << std::endl;
+                    }
+                }
             }
             else
             {
@@ -90,10 +102,10 @@ void CommandLoop()
             for (Caissa::Move move : moves)
             {
                 std::string UCI = "0000";
-                UCI[0] = std::string("abcdefghijklmnopqrstuvwxyz")[COL(move.OriginSquare)];
-                UCI[1] = std::string("123456789")[ROW(move.OriginSquare)];
-                UCI[2] = std::string("abcdefghijklmnopqrstuvwxyz")[COL(move.TargetSquare)];
-                UCI[3] = std::string("123456789")[ROW(move.TargetSquare)];
+                UCI[0] = std::string("abcdefghijklmnopqrstuvwxyz")[COL(move.OriginIndex)];
+                UCI[1] = std::string("123456789")[ROW(move.OriginIndex)];
+                UCI[2] = std::string("abcdefghijklmnopqrstuvwxyz")[COL(move.TargetIndex)];
+                UCI[3] = std::string("123456789")[ROW(move.TargetIndex)];
 
                 std::cout << UCI << std::endl;
             }
