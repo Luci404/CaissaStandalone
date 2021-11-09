@@ -5,6 +5,9 @@
 #include "CaissaCore/Caissa.h"
 
 Caissa::StandardBoard board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+//Caissa::StandardBoard board("rnbqkbnr/pppp1ppp/8/3P4/4p3/8/PPP1PPPP/RNBQKBNR");
+
+std::vector<Caissa::Move> moveHistory;
 
 std::vector<std::string> SplitString(std::string str, std::string token)
 {
@@ -50,6 +53,7 @@ void CommandLoop()
             std::cout << "PERFT <DEPTH>     " << "Count all the leaf nodes of a certain depth." << std::endl;
             std::cout << "LEGALMOVES        " << "Print all legal moves." << std::endl;
             std::cout << "FEN               " << "Print the current board position in FEN notation." << std::endl;
+            std::cout << "UNDO              " << "Undos the last move." << std::endl;
         }
         else if (commandComponents[0] == "PRINT")
         {
@@ -72,6 +76,7 @@ void CommandLoop()
                     if (moves[i].OriginIndex == originIndex && moves[i].TargetIndex == targetIndex)
                     {
                         board.MakeMove(moves[i]);
+                        moveHistory.push_back(moves[i]);
                         break;
                     }
 
@@ -115,6 +120,14 @@ void CommandLoop()
         else if (commandComponents[0] == "FEN")
         {
             std::cout << board.Fen() << std::endl;
+        }
+        else if (commandComponents[0] == "UNDO")
+        {
+            if (moveHistory.size() > 0)
+            {
+                board.UndoMove(moveHistory[moveHistory.size() - 1]);
+                moveHistory.pop_back();
+            }
         }
         else
         {
