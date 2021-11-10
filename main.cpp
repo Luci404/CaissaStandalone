@@ -4,8 +4,9 @@
 
 #include "CaissaCore/Caissa.h"
 
-Caissa::StandardBoard board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
-//Caissa::StandardBoard board("rnbqkbnr/pppp1ppp/8/3P4/4p3/8/PPP1PPPP/RNBQKBNR");
+// Caissa::StandardBoard board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+// Caissa::StandardBoard board("rnbqkbnr/pppp1ppp/8/3P4/4p3/8/PPP1PPPP/RNBQKBNR"); // En passant
+Caissa::StandardBoard board("r2k3r/8/8/8/8/8/8/R2K3R"); // Castling
 
 std::vector<Caissa::Move> moveHistory;
 
